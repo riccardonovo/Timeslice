@@ -138,13 +138,12 @@ for ii in np.arange(0, len(t_year)):
     for index, row in df_season.iterrows():
         if t_dayofyear[ii] <= int(df_season['End day'].iloc[index]):
             sss = row['SEASON'];
-            break
-        
+            break        
     # Find the DAYTYPE in the current timestamp and assign it to variable ddd
     if df_daytype['Type'].iloc[0] == 'Weekday' or df_daytype['Type'].iloc[0] == 'Weekend':
-        if t_dayofweek[ii] <= 4 & sum(df_daytype['Type'] == 'Weekday')>0:
+        if t_dayofweek[ii] <= 4:
             ddd = df_daytype.loc[df_daytype['Type'] == 'Weekday']['DAYTYPE'].iloc[0]
-        elif sum(df_daytype['Type'] == 'Weekend')>0:
+        else:
             ddd = df_daytype.loc[df_daytype['Type'] == 'Weekend']['DAYTYPE'].iloc[0]
     elif df_daytype['Type'].iloc[0] == 'All days' or df_daytype['Type'].iloc[0] == 'Single day':
         ddd = df_daytype['DAYTYPE'].iloc[0] 
@@ -390,5 +389,3 @@ for index, row in df_timeseries.iterrows():
 
 # Close the file
 writer.close()
-
-
