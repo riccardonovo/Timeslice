@@ -79,7 +79,7 @@ for index, row in df_timeseries.iterrows():
     # CASE A: Instantaneous value time serie
     if row['Timeseries type'] == 'Average value':
         
-        # Resample the time serie with a 1 minute time interval calculating the mean value, interpolating linearly missing values; resample with a 1 hour time interval
+        # Resample the time serie with a 1 minute time interval calculating the mean value, linearly interpolating missing values; resample with a 1 hour time interval
         xl[ts_name] = xl[ts_name].set_index('Timestamp').resample('1T').mean().interpolate('linear').resample('1H').first()
     
     # CASE B: Integral value time serie   
@@ -352,9 +352,9 @@ xs['Summary'] = xs['Summary'][['Name','Parameter','SpecifiedAnnualDemand','Unit'
 # Open the file
 writer = pd.ExcelWriter(file_param_output, engine = 'xlsxwriter')
 
-# Write the DaysInDayType sheet, define columns length and freeze first sheet row
-xs['DaysInDayType'].to_excel(writer, sheet_name = 'DaysInDayType', index=True)
-worksheet = writer.sheets["DaysInDayType"]
+# Write the YearSplit sheet, define columns length and freeze first sheet row
+xs['YearSplit'].to_excel(writer, sheet_name = 'YearSplit', index=True)
+worksheet = writer.sheets["YearSplit"]
 worksheet.set_column('A:B',20)
 worksheet.freeze_panes(1,0)
 
@@ -364,9 +364,9 @@ worksheet = writer.sheets["DaySplit"]
 worksheet.set_column('A:B',20)
 worksheet.freeze_panes(1,0)
 
-# Write the YearSplit sheet, define columns length and freeze first sheet row
-xs['YearSplit'].to_excel(writer, sheet_name = 'YearSplit', index=True)
-worksheet = writer.sheets["YearSplit"]
+# Write the DaysInDayType sheet, define columns length and freeze first sheet row
+xs['DaysInDayType'].to_excel(writer, sheet_name = 'DaysInDayType', index=True)
+worksheet = writer.sheets["DaysInDayType"]
 worksheet.set_column('A:B',20)
 worksheet.freeze_panes(1,0)
 
@@ -389,3 +389,5 @@ for index, row in df_timeseries.iterrows():
 
 # Close the file
 writer.close()
+
+
